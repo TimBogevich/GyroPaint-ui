@@ -10,12 +10,12 @@
   export default {
     data() {
       return {
-        gyroscope : "sdf",
+        gyroscope : [],
       }
     },
     created() {
       let sensor = new RelativeOrientationSensor({ frequency: 60 });
-      sensor.onreading = (e) => this.gyroscope = e.currentTarget.quaternion
+      sensor.onreading = (e) => this.gyroscope = sensor.quaternion
       sensor.start();
     },
   }
