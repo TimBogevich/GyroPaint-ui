@@ -1,9 +1,9 @@
 <template>
   <div>
-    <h3 v-for="(item, i) in gyroscope" :key="i">
+    <p v-for="(item, i) in gyroscope" :key="i">
       {{item}}
-    </h3>
-    <h3  :style="style">POINT</h3>
+    </p>
+    <h1  :style="style">+</h1>
   </div>
 </template>
 
