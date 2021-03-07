@@ -1,7 +1,7 @@
 <template>
   <div>
-    <p v-for="(item, i) in gyroscope" :key="i">
-      {{item}}
+    <p>
+      {{[x,y]}}
     </p>
     <h1  :style="style">+</h1>
   </div>
@@ -12,22 +12,17 @@
   export default {
     data() {
       return {
-        gyroscope : [],
+        quaternion : [],
         initPos : [],
-        room : null,
+        x: window.innerHeight,
+        y: window.innerWidth,
       }
     },
     computed: {
-      h() {return window.innerWidth},
-      w() {return window.innerHeight},
+      h() {return window.innerHeight},
+      w() {return window.innerWidth},
       style() {
-        if(this.gyroscope.length == 0) {
-          return `position: absolute; top: ${this.h/2}px; left: ${this.w/2}px;`
-        } else {
-          let x = this.w / 2 + this.gyroscope[1]
-          let y =  this.h / 2 + this.gyroscope[0]
-          return `position: absolute; top: ${x}px; left: ${y}px;`
-        }
+        return `position: absolute; top: ${this.x}px; left: ${this.y}px; -webkit-transition`
       }
     },
     methods: {
@@ -36,8 +31,7 @@
         angle = angle < 0 ? angle + 360 : angle;
         angle = angle > 180 ? angle - 360 : angle;
   
-        let dist = Math.round(-800 * Math.tan(angle * (Math.PI / 180)));
-        return dist;
+        return Math.round(-800 * Math.tan(angle * (Math.PI / 180)));
       },
       toEuler(q) {
             let sinr_cosp = 2 * (q[3] * q[0] + q[1] * q[2]);
@@ -51,24 +45,45 @@
             return [yaw, roll];
       },
       handleSensor(s) {
-        this.room.send("gyro", s.quaternion)
-        let angles = this.toEuler(s.quaternion)
+        let angles = this.toEuler(s)
         
         if(this.initPos.length == 0) {
           this.initPos = angles
         }
 
         let dist = angles.map((angle, i) => this.calcDist(angle, this.initPos[i]))
-        this.gyroscope = dist
+        debugger
+        this.x = this.h / 2 + dist[1]
+        this.y = this.w / 2 + dist[0]
+        
+        // let yNew = this.y + y
+        // let xNew = this.x + x
+
+        // if (yNew > 0 && yNew < this.w) {
+        //   this.y = yNew
+        // } else {
+        //   this.initPos = angles
+        // }
+        
+        // if (xNew > 0 && xNew < this.h) {
+        //   debugger
+        //   this.x = xNew
+        // } else {
+        //   this.initPos = angles
+        // }
+
       },
     },
     created() {
-      let sensor = new RelativeOrientationSensor({ frequency: 60 });
-      sensor.onreading = () => this.handleSensor(sensor)
-      sensor.start();
-      
+
       let client = new Colyseus.Client("ws://localhost:2567");
-      client.joinOrCreate("my_room").then(room => this.room = room)
+      client.joinOrCreate("my_room").then(room => {
+        room.state.onChange = (changes) => {
+            changes.forEach(change => {
+                this.handleSensor(Array.from(change.value))
+            });
+        };
+      })
 
 
     },
