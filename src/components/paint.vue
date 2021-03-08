@@ -1,9 +1,6 @@
 <template>
-  <div>
-    <canvas :id="canvasId" class="canvas-style" v-on:mousedown="mouseDown" />
-    <div>
-      {{scope}}
-    </div>
+  <div style="height:99%;">
+    <canvas  :id="canvasId" class="canvas-style" v-on:mousedown="mouseDown" />
   </div>
 </template>
 <script>
@@ -34,28 +31,28 @@
                 return new paper.Tool();
             },
             mouseDown() {
-                // in order to access functions in nested tool
-                let self = this;
-                // create drawing tool
-                this.tool = this.createTool(this.scope);
-                this.tool.onMouseDown = (event) => {
-                    // init path
-                    self.path = self.pathCreate(self.scope);
-                    // add point to path
-                    self.path.add(event.point);
-                };
-                this.tool.onMouseDrag = (event) => {
-                    self.path.add(event);
-                };
-                this.tool.onMouseUp = (event) => {
-                    // line completed
-                    self.path.add(event.point);
-                }
+              this.tool = this.createTool(this.scope);
+              this.tool.onMouseDown = (event) => {
+                  this.path = this.pathCreate(this.scope);
+                  this.path.add(event.point);
+              };
+              this.tool.onMouseDrag = (event) => {
+                  this.path.add(event);
+              };
+              this.tool.onMouseUp = (event) => {
+                  this.path.add(event.point);
+              }
+            },
+            temp() {
+              this.path = this.pathCreate(this.scope);
+              this.path.add({x : 40, y : 40});
+              this.path.add({x : 66, y : 60});
             }
         },
         mounted() {
             this.scope = new paper.PaperScope();
             this.scope.setup(this.canvasId);
+            this.temp()
         }
     }
 </script>
@@ -64,7 +61,7 @@
     .canvas-style {
         cursor: crosshair;
         width: 100% !important;
-        height: 500px !important;
+        height: 100% !important;
         border: 5px solid black;
         border-radius: 10px;
         display: block;
