@@ -25,9 +25,9 @@
             pathCreate(scope) {
                 scope.activate();
                 return new paper.Path({
-                    strokeColor: "#000000",
-                    strokeJoin: 'round',
-                    strokeWidth: 1.5
+                  strokeColor: '#E4141B',
+                  strokeWidth: 20,
+                  strokeCap: 'round'
                 })
             },
             createTool(scope) {
