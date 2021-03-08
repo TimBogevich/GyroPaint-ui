@@ -67,7 +67,7 @@
       sensor.onreading = () => this.handleSensor(sensor)
       sensor.start();
       
-      let client = new Colyseus.Client("ws://localhost:2567");
+      let client = new Colyseus.Client(process.env.VUE_APP_BACKEND);
       client.joinOrCreate("my_room").then(room => this.room = room)
 
 

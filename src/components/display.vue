@@ -52,31 +52,15 @@
         }
 
         let dist = angles.map((angle, i) => this.calcDist(angle, this.initPos[i]))
-        debugger
         this.x = this.h / 2 + dist[1]
         this.y = this.w / 2 + dist[0]
         
-        // let yNew = this.y + y
-        // let xNew = this.x + x
-
-        // if (yNew > 0 && yNew < this.w) {
-        //   this.y = yNew
-        // } else {
-        //   this.initPos = angles
-        // }
-        
-        // if (xNew > 0 && xNew < this.h) {
-        //   debugger
-        //   this.x = xNew
-        // } else {
-        //   this.initPos = angles
-        // }
 
       },
     },
     created() {
 
-      let client = new Colyseus.Client("ws://localhost:2567");
+      let client = new Colyseus.Client(process.env.VUE_APP_BACKEND);
       client.joinOrCreate("my_room").then(room => {
         room.state.onChange = (changes) => {
             changes.forEach(change => {
