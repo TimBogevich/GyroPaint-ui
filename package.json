@@ -9,7 +9,14 @@
   "dependencies": {
     "colyseus.js": "^0.14.1",
     "core-js": "^3.6.5",
+    "konva": "^7.2.5",
+    "paintablejs": "^1.0.4",
+    "paper": "^0.12.8",
     "vue": "^2.6.11",
+    "vue-fabric": "^0.1.41",
+    "vue-fabric-wrapper": "^0.3.71",
+    "vue-konva": "^2.1.7",
+    "vue-paintable": "^2.1.5",
     "vue-router": "^3.2.0",
     "vuetify": "^2.4.0",
     "vuex": "^3.4.0"
