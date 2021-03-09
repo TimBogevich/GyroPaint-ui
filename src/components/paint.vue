@@ -26,7 +26,7 @@
                 scope.activate();
                 return new paper.Path({
                   strokeColor: '#E4141B',
-                  strokeWidth: 20,
+                  strokeWidth: 10,
                   strokeCap: 'round'
                 })
             },
