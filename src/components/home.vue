@@ -29,6 +29,21 @@
         <v-btn v-for="c in colors" :key="c" :color="c"></v-btn>
       </v-btn-toggle>
     </v-row>
+    <v-row
+      class="strokePalette"
+      align="center"
+      justify="center"
+    >
+      <v-btn-toggle
+        v-model="strokeSelected"
+        rounded
+        @change="changeStroke"
+      >
+        <v-btn v-for="s in strokes" :key="s" >
+          <div :style="`height: ${s}px; width: ${s}px; border-radius: 50%; background-color: #555;`"></div>
+        </v-btn>
+      </v-btn-toggle>
+    </v-row>
 
     <!-- <h1  :style="style">+</h1> -->
   </div>
@@ -46,13 +61,15 @@
         initPos : [],
         room : null,
         uuid: null,
-        colorSelected: 0
+        colorSelected: 0,
+        strokeSelected: 0,
       }
     },
     computed: {
       h() {return window.innerWidth},
       w() {return window.innerHeight},
       colors: get("general/colors"),
+      strokes: get("general/strokes"),
       style() {
         if(this.gyroscope.length == 0) {
           return `position: absolute; top: ${this.h/2}px; left: ${this.w/2}px;`
@@ -67,6 +84,10 @@
       changeColor() {
         let color = this.colors[this.colorSelected]
         this.room.send("userChanged", {key : "color", value: color} )
+      },
+      changeStroke() {
+        let stroke = this.strokes[this.strokeSelected]
+        this.room.send("userChanged", {key : "strokeSize", value: stroke} )
       },
       capture() {
         this.uuid = this.uuid ? null : uuidv4()
@@ -131,5 +152,11 @@
   left: 50%;
   transform: translate(-50%, -50%);
   bottom: 20%;
+}
+.strokePalette {
+  position: absolute;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  bottom: 10%;
 }
 </style>

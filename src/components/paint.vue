@@ -30,6 +30,7 @@
             return {
               pathId: i.pathId,
               color: i.color,
+              strokeSize: i.strokeSize,
               x: window.innerHeight /2 + i.x,
               y: window.innerWidth /2 + i.y
             }
@@ -47,6 +48,9 @@
               }
               if(path.strokeColor != p.color) {
                 path.strokeColor = p.color
+              }
+              if(path.strokeWidth != p.strokeSize) {
+                path.strokeWidth = p.strokeSize
               }
 
               path?.add({y: p.x, x: p.y})
