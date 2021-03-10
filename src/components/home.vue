@@ -1,6 +1,13 @@
 <template>
   <div>
-    <v-btn color="success" @click="capture">
+    <v-btn
+      @click="capture"
+      class="capture_btn mx-2"
+      fab
+      dark
+      x-large
+      :color="!uuid ? 'green' : 'red'"
+    >
       <span v-if="!uuid">record</span>
       <span v-else>stop</span>
     </v-btn>
@@ -89,5 +96,13 @@
 </script>
 
 <style lang="scss" scoped>
-
+.capture_btn {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  /* bring your own prefixes */
+  transform: translate(-50%, -50%);
+  height: 30vh;
+  width: 30vh;
+}
 </style>
