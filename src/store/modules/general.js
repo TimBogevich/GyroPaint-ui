@@ -1,9 +1,9 @@
 import Vue from 'vue'
 import { make, set, dispatch } from 'vuex-pathify'
 import * as Colyseus from "colyseus.js";
+import axios from "axios"
+import urljoin from "url-join"
 
-
-const server = process.env.VUE_APP_BACKEND
 
 function reactColyseus(room, state, obj) {
   room.state[obj].onAdd = (item) => {
@@ -31,17 +31,27 @@ const mutations = {
 }
 
 const getters = {
-
+  protocolWS() {
+    return process.env.VUE_APP_BACKEND_PROTOCOL == "http" ? "ws://" : "wss://"
+  },
+  protocolHTTP() {
+    return process.env.VUE_APP_BACKEND_PROTOCOL == "http" ? "http://" : "https://"
+  },
+  server() {
+    return process.env.VUE_APP_BACKEND
+  }
 }
 
 const actions = {
-
-  init({state}, options) {
-    let client = new Colyseus.Client(server);
-    client.joinOrCreate("my_room", options).then(room => {
+  init({state, getters}, options) {
+    let client = new Colyseus.Client(urljoin(getters.protocolWS, getters.server));
+    client.joinOrCreate(options.roomId, options).then(room => {
       reactColyseus(room, state.users, "users")
     })
   },
+  async createRoom({getters}) {
+    return await axios.get(urljoin(getters.protocolHTTP, getters.server, "create_room"))
+  }
 
 
 }

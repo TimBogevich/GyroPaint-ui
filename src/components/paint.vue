@@ -75,7 +75,6 @@
         },
       },
       mounted() {
-        this.$store.dispatch("general/init", {board : true})
         this.scope = new paper.PaperScope();
         this.scope.setup(this.canvasId);
       }
