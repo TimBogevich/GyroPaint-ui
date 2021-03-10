@@ -19,7 +19,6 @@
           scope: null,
           canvasId : "test",
           initPos : [],
-          path : null,
       }),
       computed: {
         users : get("general/users"),
@@ -68,10 +67,6 @@
         this.$store.dispatch("general/init")
         this.scope = new paper.PaperScope();
         this.scope.setup(this.canvasId);
-        this.path = this.pathCreate(this.scope);
-        this.path.add({x: 20, y: 20})
-        this.path.add({x: 200, y: 200})
-        this.path.add({x: -20, y: -20})
       }
   }
 </script>
