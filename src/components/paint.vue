@@ -1,6 +1,6 @@
 <template>
-  <div>
-    <canvas  :id="canvasId"  />
+  <div style="height:99%;">
+    <canvas  :id="canvasId" class="canvas-style" />
 
     <div v-for="user in users" :key="user.id" class="abs" :style="style(user)">
       <v-row>
@@ -83,6 +83,12 @@
 </script>
 
 <style scoped>
+    .canvas-style {
+        cursor: crosshair;
+        width: 100% !important;
+        height: 100% !important;
+    }
+
     .abs {
       position: absolute;
     }
