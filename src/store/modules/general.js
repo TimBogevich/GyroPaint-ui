@@ -35,9 +35,9 @@ const getters = {
 
 const actions = {
 
-  init({state}) {
+  init({state}, options) {
     let client = new Colyseus.Client(server);
-    client.joinOrCreate("my_room").then(room => {
+    client.joinOrCreate("my_room", options).then(room => {
       reactColyseus(room, state.users, "users")
     })
   },

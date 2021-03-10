@@ -23,13 +23,15 @@
       computed: {
         users : get("general/users"),
         colors : get("general/colors"),
+        hm() { return window.innerHeight /2 },
+        wm() { return window.innerWidth /2 },
         coordinates() {
           return this.users.map(i => {
             return {
               pathId: i.pathId,
               color: i.color,
-              x: i.x,
-              y: i.y
+              x: window.innerHeight /2 + i.x,
+              y: window.innerWidth /2 + i.y
             }
           }).filter(i => i.pathId)
         }
@@ -54,7 +56,7 @@
         }
       },
       methods: {
-        style : (user) =>   `top: ${user.x}px; left: ${user.y}px; -webkit-transition`,
+        style : (user) =>   `top: ${window.innerHeight /2 + user.x}px; left: ${window.innerWidth /2 + user.y}px; -webkit-transition`,
         pathCreate(scope) {
             scope.activate();
             return new paper.Path({
@@ -69,7 +71,7 @@
         },
       },
       mounted() {
-        this.$store.dispatch("general/init")
+        this.$store.dispatch("general/init", {board : true})
         this.scope = new paper.PaperScope();
         this.scope.setup(this.canvasId);
       }
