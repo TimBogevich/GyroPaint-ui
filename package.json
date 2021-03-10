@@ -7,11 +7,13 @@
     "build": "vue-cli-service build"
   },
   "dependencies": {
+    "axios": "^0.21.1",
     "colyseus.js": "^0.14.1",
     "core-js": "^3.6.5",
     "konva": "^7.2.5",
     "paintablejs": "^1.0.4",
     "paper": "^0.12.8",
+    "uuid": "^8.3.2",
     "vue": "^2.6.11",
     "vue-fabric": "^0.1.41",
     "vue-fabric-wrapper": "^0.3.71",
@@ -19,7 +21,9 @@
     "vue-paintable": "^2.1.5",
     "vue-router": "^3.2.0",
     "vuetify": "^2.4.0",
-    "vuex": "^3.4.0"
+    "vuex": "^3.4.0",
+    "vuex-pathify": "^1.4.5",
+    "vuex-persistedstate": "^4.0.0-beta.3"
   },
   "devDependencies": {
     "@vue/cli-plugin-babel": "~4.5.0",

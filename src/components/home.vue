@@ -1,20 +1,30 @@
 <template>
   <div>
+    <v-btn color="success" @click="capture">
+      <span v-if="!uuid">record</span>
+      <span v-else>stop</span>
+    </v-btn>
+    
     <p v-for="(item, i) in gyroscope" :key="i">
       {{item}}
     </p>
+
+
     <h1  :style="style">+</h1>
   </div>
 </template>
 
 <script>
   import * as Colyseus from "colyseus.js";
+  import { v4 as uuidv4 } from 'uuid';
+  
   export default {
     data() {
       return {
         gyroscope : [],
         initPos : [],
         room : null,
+        uuid: null,
       }
     },
     computed: {
@@ -31,6 +41,9 @@
       }
     },
     methods: {
+      capture() {
+        this.uuid = this.uuid ? null : uuidv4()
+      },
       calcDist(angle, initAngle) {
         angle = (angle - initAngle) * (180 / Math.PI);
         angle = angle < 0 ? angle + 360 : angle;
@@ -51,7 +64,7 @@
             return [yaw, roll];
       },
       handleSensor(s) {
-        this.room.send("gyro", s.quaternion)
+        this.room.send("gyro", {quaternion : s.quaternion, pathId : this.uuid})
         let angles = this.toEuler(s.quaternion)
         
         if(this.initPos.length == 0) {

@@ -3,12 +3,16 @@
     <p>
       {{[x,y]}}
     </p>
+
+    <p v-for="item in users" :key="item.id">
+      {{item.avatar}} . {{item.x}} {{item.y}} 
+    </p>
     <h1  :style="style">+</h1>
   </div>
 </template>
 
 <script>
-  import * as Colyseus from "colyseus.js";
+  import {get} from "vuex-pathify"
   export default {
     data() {
       return {
@@ -21,6 +25,7 @@
     computed: {
       h() {return window.innerHeight},
       w() {return window.innerWidth},
+      users : get("general/users"),
       style() {
         return `position: absolute; top: ${this.x}px; left: ${this.y}px; -webkit-transition`
       }
@@ -59,17 +64,7 @@
       },
     },
     created() {
-
-      let client = new Colyseus.Client(process.env.VUE_APP_BACKEND);
-      client.joinOrCreate("my_room").then(room => {
-        room.state.onChange = (changes) => {
-            changes.forEach(change => {
-                this.handleSensor(Array.from(change.value))
-            });
-        };
-      })
-
-
+      this.$store.dispatch("general/init")
     },
   }
 </script>
