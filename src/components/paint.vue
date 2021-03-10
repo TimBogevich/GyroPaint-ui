@@ -81,8 +81,8 @@
         cursor: crosshair;
         width: 100% !important;
         height: 100% !important;
-        border: 5px solid black;
-        border-radius: 10px;
+        border: 2px solid black;
+        border-radius: 5px;
         display: block;
         margin: auto;
         box-shadow: 0 10px 8px -8px black;

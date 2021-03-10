@@ -30,7 +30,7 @@
       </v-btn-toggle>
     </v-row>
 
-    <h1  :style="style">+</h1>
+    <!-- <h1  :style="style">+</h1> -->
   </div>
 </template>
 
@@ -130,6 +130,6 @@
   position: absolute;
   left: 50%;
   transform: translate(-50%, -50%);
-  bottom: 0%;
+  bottom: 20%;
 }
 </style>
