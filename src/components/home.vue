@@ -125,12 +125,14 @@
       },
     },
     created() {
-      let sensor = new RelativeOrientationSensor({ frequency: 60 });
-      sensor.onreading = () => this.handleSensor(sensor)
-      sensor.start();
       
       let client = new Colyseus.Client(process.env.VUE_APP_BACKEND);
       client.joinOrCreate("my_room").then(room => this.room = room)
+
+      
+      let sensor = new RelativeOrientationSensor({ frequency: 60 });
+      sensor.onreading = () => this.handleSensor(sensor)
+      sensor.start();
 
 
     },
