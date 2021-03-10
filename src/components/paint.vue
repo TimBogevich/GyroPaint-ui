@@ -22,10 +22,12 @@
       }),
       computed: {
         users : get("general/users"),
+        colors : get("general/colors"),
         coordinates() {
           return this.users.map(i => {
             return {
               pathId: i.pathId,
+              color: i.color,
               x: i.x,
               y: i.y
             }
@@ -41,6 +43,10 @@
                 path = this.pathCreate(this.scope);
                 this.paths.set(p.pathId, path)
               }
+              if(path.strokeColor != p.color) {
+                path.strokeColor = p.color
+              }
+
               path?.add({y: p.x, x: p.y})
               
             });
@@ -52,7 +58,7 @@
         pathCreate(scope) {
             scope.activate();
             return new paper.Path({
-              strokeColor: '#E4141B',
+              strokeColor: 'red',
               strokeWidth: 10,
               strokeCap: 'round'
             })

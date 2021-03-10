@@ -8,7 +8,7 @@
       x-large
       :color="!uuid ? 'green' : 'red'"
     >
-      <span v-if="!uuid">record</span>
+      <span v-if="!uuid">paint</span>
       <span v-else>stop</span>
     </v-btn>
     
@@ -16,6 +16,19 @@
       {{item}}
     </p>
 
+    <v-row
+      class="colorPalette"
+      align="center"
+      justify="center"
+    >
+      <v-btn-toggle
+        v-model="colorSelected"
+        rounded
+        @change="changeColor"
+      >
+        <v-btn v-for="c in colors" :key="c" :color="c"></v-btn>
+      </v-btn-toggle>
+    </v-row>
 
     <h1  :style="style">+</h1>
   </div>
@@ -24,6 +37,7 @@
 <script>
   import * as Colyseus from "colyseus.js";
   import { v4 as uuidv4 } from 'uuid';
+  import {get} from 'vuex-pathify'
   
   export default {
     data() {
@@ -32,11 +46,13 @@
         initPos : [],
         room : null,
         uuid: null,
+        colorSelected: 0
       }
     },
     computed: {
       h() {return window.innerWidth},
       w() {return window.innerHeight},
+      colors: get("general/colors"),
       style() {
         if(this.gyroscope.length == 0) {
           return `position: absolute; top: ${this.h/2}px; left: ${this.w/2}px;`
@@ -48,6 +64,10 @@
       }
     },
     methods: {
+      changeColor() {
+        let color = this.colors[this.colorSelected]
+        this.room.send("userChanged", {key : "color", value: color} )
+      },
       capture() {
         this.uuid = this.uuid ? null : uuidv4()
         this.room.send("userChanged", {key : "pathId", value: this.uuid} )
@@ -105,5 +125,11 @@
   transform: translate(-50%, -50%);
   height: 30vh;
   width: 30vh;
+}
+.colorPalette {
+  position: absolute;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  bottom: 0%;
 }
 </style>
