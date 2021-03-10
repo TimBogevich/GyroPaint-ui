@@ -37,7 +37,6 @@
           handler: function (val, oldVal) {
             val.forEach(p => {
               let path = this.paths.get(p.pathId)
-              debugger
               if(!path) {
                 path = this.pathCreate(this.scope);
                 this.paths.set(p.pathId, path)

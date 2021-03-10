@@ -50,6 +50,7 @@
     methods: {
       capture() {
         this.uuid = this.uuid ? null : uuidv4()
+        this.room.send("userChanged", {key : "pathId", value: this.uuid} )
       },
       calcDist(angle, initAngle) {
         angle = (angle - initAngle) * (180 / Math.PI);
@@ -71,7 +72,7 @@
             return [yaw, roll];
       },
       handleSensor(s) {
-        this.room.send("gyro", {quaternion : s.quaternion, pathId : this.uuid})
+        this.room.send("gyro", s.quaternion )
         let angles = this.toEuler(s.quaternion)
         
         if(this.initPos.length == 0) {
