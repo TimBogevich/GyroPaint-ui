@@ -22,7 +22,7 @@ function reactColyseus(room, state, obj) {
 
 const state = {
   users : [],
-  colors : ["black", "red", "yellow", "green", "white", "blue"],
+  colors : ["black", "red", "yellow", "green", "blue", "purple", "pink", "brown"],
 }
 
 const mutations = {

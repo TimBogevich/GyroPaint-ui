@@ -7,7 +7,7 @@
     <p v-for="item in users" :key="item.id">
       {{item.avatar}} . {{item.x}} {{item.y}} 
     </p>
-    <h1  :style="style">+</h1>
+    <!-- <h1  :style="style">+</h1> -->
   </div>
 </template>
 
