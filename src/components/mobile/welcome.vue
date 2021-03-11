@@ -10,7 +10,7 @@
         1. Open this site on a big screen like TV or Projector
       </h4>
       <h4>
-        2. Scan QR code on your another screen
+        2. Click button "{{scanText}}" bellow
       </h4>
       <h4>
         3. Flip your phone to draw
@@ -20,7 +20,7 @@
     <v-row class="ma-5 justify-center">
       <v-btn elevation="10" @click="$emit('toScan')" id="scanQR" color="primary">
         <div>
-          Scan QR code 
+          {{scanText}}
         </div>
         <v-icon x-large>
           mdi-qrcode-scan
@@ -33,7 +33,11 @@
 
 <script>
   export default {
-    
+    data() {
+      return {
+        scanText : "Scan QR code"
+      }
+    },
   }
 </script>
 
