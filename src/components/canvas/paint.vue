@@ -1,7 +1,7 @@
 <template>
   <div style="height:99%;">
     <vue-qrcode id="qr" :value="roomUrl" :margin="0" :color="color" :scale="3"/>
-    <canvas  id="canv" class="canvas-style" />
+    <canvas  ref="canv" id="canv" class="canvas-style" />
 
     <div v-for="user in users" :key="user.id" class="abs" :style="style(user)">
       <v-row>
@@ -12,13 +12,14 @@
 </template>
 <script>
   import {get} from "vuex-pathify"
-  const paper = require('paper');
   import VueQrcode from 'vue-qrcode'
   export default {
       props : ["roomUrl"],
       components : {VueQrcode},
       data: () => ({
           paths: new Map(),
+          pathPrevCoord : new Map(),
+          ctx : null,
           scope: null,
           initPos : [],
           color : {
@@ -47,19 +48,23 @@
         coordinates: {
           handler: function (val, oldVal) {
             val.forEach(p => {
-              let path = this.paths.get(p.pathId)
-              if(!path) {
-                path = this.pathCreate(this.scope);
-                this.paths.set(p.pathId, path)
-              }
-              if(path.strokeColor != p.color) {
-                path.strokeColor = p.color
-              }
-              if(path.strokeWidth != p.strokeSize) {
-                path.strokeWidth = p.strokeSize
+              let prew = this.pathPrevCoord.get(p.pathId)
+              if(!prew) {
+                this.pathPrevCoord.set(p.pathId, {y: p.y, x:p.x})
+              } else {
+                this.ctx.beginPath();
+                this.ctx.strokeStyle = p.color;
+                this.ctx.lineWidth = p.strokeSize;
+                this.ctx.shadowColor = p.color;;
+                this.ctx.shadowBlur = 10;
+                this.ctx.lineCap = 'round';
+                this.ctx.moveTo(prew.y, prew.x);
+                this.ctx.lineTo(p.y, p.x);
+                this.pathPrevCoord.set(p.pathId, {y: p.y, x:p.x})
               }
 
-              path?.add({y: p.x, x: p.y})
+              this.ctx.stroke();
+              this.ctx.closePath()
               
             });
           },
@@ -67,22 +72,14 @@
       },
       methods: {
         style : (user) =>   `top: ${window.innerHeight /2 + user.x}px; left: ${window.innerWidth /2 + user.y}px; -webkit-transition`,
-        pathCreate(scope) {
-            scope.activate();
-            return new paper.Path({
-              strokeColor: 'red',
-              strokeWidth: 10,
-              strokeCap: 'round'
-            })
-        },
-        createTool(scope) {
-            scope.activate();
-            return new paper.Tool();
-        },
       },
       mounted() {
-        this.scope = new paper.PaperScope();
-        this.scope.setup("canv");
+        let canvas = this.$refs.canv
+        canvas.setAttribute("width", window.innerWidth);
+        canvas.setAttribute("height", window.innerHeight);
+        this.ctx = canvas.getContext("2d");
+
+
       }
   }
 </script>
