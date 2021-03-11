@@ -32,6 +32,7 @@
     },
     methods: {
       onDecode(value)  {
+        window.navigator.vibrate(200)
         this.$emit("code", value)
       }
     },
