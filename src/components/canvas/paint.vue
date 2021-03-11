@@ -1,5 +1,6 @@
 <template>
   <div style="height:99%;">
+    <vue-qrcode id="qr" :value="roomUrl" :margin="0" :color="color" :scale="3"/>
     <canvas  id="canv" class="canvas-style" />
 
     <div v-for="user in users" :key="user.id" class="abs" :style="style(user)">
@@ -12,11 +13,18 @@
 <script>
   import {get} from "vuex-pathify"
   const paper = require('paper');
+  import VueQrcode from 'vue-qrcode'
   export default {
+      props : ["roomUrl"],
+      components : {VueQrcode},
       data: () => ({
           paths: new Map(),
           scope: null,
           initPos : [],
+          color : {
+            dark: '#5ab55e', 
+            light: '#ffffffff'
+          }
       }),
       computed: {
         users : get("general/users"),
@@ -88,5 +96,10 @@
 
     .abs {
       position: absolute;
+    }
+
+    #qr {
+      position: absolute;
+      margin: 5px;
     }
 </style>

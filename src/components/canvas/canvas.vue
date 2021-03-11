@@ -1,7 +1,7 @@
 <template>
   <div v-if="url">
     <login v-if="users.length == 0" :url="url" />
-    <paint v-else/>
+    <paint :roomUrl="url" v-else/>
   </div>
   <div v-else>
     <v-progress-circular
