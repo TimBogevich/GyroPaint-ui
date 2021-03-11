@@ -7,10 +7,10 @@
     </v-row>
     <v-row class="ma-5">
       <h4>
-        1. Open this site on a big screen like TV or Projector
+        1. Open this site on a big screen like a TV or Beamer
       </h4>
       <h4>
-        2. Click button "{{scanText}}" bellow
+        2. Click the "{{scanText}}" button bellow
       </h4>
       <h4>
         3. Flip your phone to draw
