@@ -1,6 +1,7 @@
 <template>
   <div>
-    <scanQr @code="goDraw($event)" v-if="mode == 'qr'" />
+    <welcome @toScan="mode='qr'" v-if="mode == 'welcome'" />
+    <scanQr @code="goDraw($event)" v-else-if="mode == 'qr'" />
     <brush v-else-if="mode == 'brush'"  :roomId="roomId"/>
     <v-progress-circular
       v-else-if="mode == 'load'"
@@ -16,14 +17,16 @@
 <script>
   import brush from "./brush"
   import scanQr from "./scanQr"
+  import welcome from "./welcome"
   export default {
     components : {
       brush,
       scanQr,
+      welcome,
     },
     data() {
       return {
-        mode: "qr",
+        mode: "welcome",
         roomId : null,
       }
     },

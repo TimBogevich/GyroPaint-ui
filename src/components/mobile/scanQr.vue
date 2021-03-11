@@ -5,7 +5,7 @@
       <v-form>
         <v-text-field
           outline
-          number
+          label="or enter the number manually"
           v-model="roomId"
         ></v-text-field>
         <v-btn @click="$emit('code', roomId)" color="success">go</v-btn>
