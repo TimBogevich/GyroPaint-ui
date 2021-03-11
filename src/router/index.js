@@ -11,25 +11,20 @@ const routes = [
     component: Home
   },
   {
-    path: '/display',
-    name: 'Display',
-    component: () => import(/* webpackChunkName: "about" */ '../views/Display.vue')
+    path: '/debuger',
+    name: 'Debuger',
+    component: () => import(/* webpackChunkName: "about" */ '../views/Debuger.vue')
   },
   {
     path: '/canvas',
     name: 'Canvas',
-    component: () => import(/* webpackChunkName: "about" */ '../components/canvas.vue')
+    component: () => import(/* webpackChunkName: "about" */ '../components/canvas/canvas.vue')
   },
   {
     path: '/mobile',
     name: 'Mobile',
-    component: () => import(/* webpackChunkName: "about" */ '../components/mobile.vue')
+    component: () => import(/* webpackChunkName: "about" */ '../components/mobile/mobile.vue')
   },
-  {
-    path: '/paint',
-    name: 'Paint',
-    component: () => import(/* webpackChunkName: "about" */ '../components/paint.vue')
-  }
 ]
 
 const router = new VueRouter({

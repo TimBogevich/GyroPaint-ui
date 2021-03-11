@@ -1,6 +1,6 @@
 <template>
   <div style="height:99%;">
-    <canvas  :id="canvasId" class="canvas-style" />
+    <canvas  id="canv" class="canvas-style" />
 
     <div v-for="user in users" :key="user.id" class="abs" :style="style(user)">
       <v-row>
@@ -13,11 +13,9 @@
   import {get} from "vuex-pathify"
   const paper = require('paper');
   export default {
-      name: "Canvas",
       data: () => ({
           paths: new Map(),
           scope: null,
-          canvasId : "test",
           initPos : [],
       }),
       computed: {
@@ -76,7 +74,7 @@
       },
       mounted() {
         this.scope = new paper.PaperScope();
-        this.scope.setup(this.canvasId);
+        this.scope.setup("canv");
       }
   }
 </script>

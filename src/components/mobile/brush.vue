@@ -89,7 +89,6 @@
     },
     created() {
       let client = new Colyseus.Client(urljoin(this.protocolWS, this.server))
-      debugger
       client.joinOrCreate(this.roomId).then(room => this.room = room)
 
       

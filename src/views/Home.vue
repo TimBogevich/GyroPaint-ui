@@ -1,16 +1,25 @@
 <template>
   <div >
-    <home/>
+    <mobile v-if="isMobile"/>
+    <canv v-else/>
   </div>
 </template>
 
 <script>
 // @ is an alias to /src
-import home from '@/components/home.vue'
+import mobile from '@/components/mobile/mobile.vue'
+import canv from '@/components/canvas/canvas.vue'
 
 export default {
   components: {
-    home
-  }
+    mobile,
+    canv
+  },
+  computed: {
+    isMobile() {
+      let d = this.$vuetify.breakpoint.name
+      return ["xs", "sm", "md"].includes(d)
+    }
+  },
 }
 </script>
