@@ -12,10 +12,6 @@
       <span v-else>stop</span>
     </v-btn>
     
-    <p v-for="(item, i) in gyroscope" :key="i">
-      {{item}}
-    </p>
-
     <v-row
       class="colorPalette"
       align="center"
@@ -59,8 +55,6 @@
     props : ["roomId"],
     data() {
       return {
-        gyroscope : [],
-        initPos : [],
         room : null,
         uuid: null,
         colorSelected: 0,
@@ -74,15 +68,6 @@
       strokes: get("general/strokes"),
       server: get("general/server"),
       protocolWS: get("general/protocolWS"),
-      style() {
-        if(this.gyroscope.length == 0) {
-          return `position: absolute; top: ${this.h/2}px; left: ${this.w/2}px;`
-        } else {
-          let x = this.w / 2 + this.gyroscope[1]
-          let y =  this.h / 2 + this.gyroscope[0]
-          return `position: absolute; top: ${x}px; left: ${y}px;`
-        }
-      }
     },
     methods: {
       changeColor() {
@@ -97,39 +82,14 @@
         this.uuid = this.uuid ? null : uuidv4()
         this.room.send("userChanged", {key : "pathId", value: this.uuid} )
       },
-      calcDist(angle, initAngle) {
-        angle = (angle - initAngle) * (180 / Math.PI);
-        angle = angle < 0 ? angle + 360 : angle;
-        angle = angle > 180 ? angle - 360 : angle;
-  
-        let dist = Math.round(-800 * Math.tan(angle * (Math.PI / 180)));
-        return dist;
-      },
-      toEuler(q) {
-            let sinr_cosp = 2 * (q[3] * q[0] + q[1] * q[2]);
-            let cosr_cosp = 1 - 2 * (q[0] * q[0] + q[1] * q[1]);
-            let roll = Math.atan2(sinr_cosp, cosr_cosp);
-
-            let siny_cosp = 2 * (q[3] * q[2] + q[0] * q[1]);
-            let cosy_cosp = 1 - 2 * (q[1] * q[1] + q[2] * q[2]);
-            let yaw = Math.atan2(siny_cosp, cosy_cosp);
-        
-            return [yaw, roll];
-      },
       handleSensor(s) {
         this.room.send("gyro", s.quaternion )
-        let angles = this.toEuler(s.quaternion)
-        
-        if(this.initPos.length == 0) {
-          this.initPos = angles
-        }
 
-        let dist = angles.map((angle, i) => this.calcDist(angle, this.initPos[i]))
-        this.gyroscope = dist
       },
     },
     created() {
       let client = new Colyseus.Client(urljoin(this.protocolWS, this.server))
+      debugger
       client.joinOrCreate(this.roomId).then(room => this.room = room)
 
       

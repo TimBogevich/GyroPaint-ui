@@ -1,31 +1,32 @@
 <template>
   <div>
-    <qrcode-stream v-if="scanQR" @decode="onDecode"></qrcode-stream>
-    {{test}}
+    <scanQr @code="goDraw($event)" v-if="mode == 'qr'" />
+    <brush v-else-if="mode == 'brush'"  :roomId="roomId"/>
   </div>
 </template>
 
 <script>
-  import { QrcodeStream, QrcodeDropZone, QrcodeCapture } from 'vue-qrcode-reader'
   import brush from "./brush"
-
+  import scanQr from "./scanQr"
   export default {
-    components: {
-      QrcodeStream,
-      QrcodeDropZone,
-      QrcodeCapture
+    components : {
+      brush,
+      scanQr,
     },
     data() {
       return {
-        scanQR : true,
-        test: null
+        mode: "qr",
+        roomId : null,
       }
     },
     methods: {
-      onDecode(value)  {
-        this.test = value
+      goDraw(value) {
+        this.roomId = value.split("/").reverse()[0]
+        debugger
+        this.mode = "brush"
       }
     },
+
     
   }
 </script>
