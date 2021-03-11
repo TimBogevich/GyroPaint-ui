@@ -7,7 +7,7 @@
     </v-row>
     <v-row class="justify-center text--disabled my-5">
       <h1>
-        Scan this code to paint
+        Scan this QR code to paint
       </h1>
     </v-row>
     <v-row class="justify-center text--disabled my-5">
