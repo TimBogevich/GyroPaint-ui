@@ -1,7 +1,16 @@
 <template>
-  <div>
+  <div v-if="url">
     <login v-if="users.length == 0" :url="url" />
     <paint v-else/>
+  </div>
+  <div v-else>
+    <v-progress-circular
+      :size="70"
+      id="progress"
+      :width="7"
+      color="purple"
+      indeterminate
+    ></v-progress-circular>
   </div>
 </template>
 
@@ -18,7 +27,7 @@
     },
     data() {
       return {
-        url : "error",
+        url : null,
       }
     },
     computed: {
@@ -35,5 +44,11 @@
 </script>
 
 <style lang="scss" scoped>
-
+#progress {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  /* bring your own prefixes */
+  transform: translate(-50%, -50%);
+}
 </style>
