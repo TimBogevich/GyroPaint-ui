@@ -1,6 +1,18 @@
 <template>
+
   <v-container grid-list-xs>
-    <qrcode-stream v-if="scanQR" @decode="onDecode"></qrcode-stream>
+    <qrcode-stream @init="onInit" @decode="onDecode">
+      <v-row class="mt-5 justify-center loading-indicator" v-if="loading">
+        <v-progress-circular
+          :size="70"
+          id="progress"
+          :width="7"
+          color="purple"
+          indeterminate
+        ></v-progress-circular>
+      </v-row>
+    </qrcode-stream>
+
     <v-row class="pa-5 justify-center">
       <v-form>
         <v-text-field
@@ -26,7 +38,7 @@
     },
     data() {
       return {
-        scanQR : true,
+        loading: false,
         roomId : "",
       }
     },
@@ -34,7 +46,18 @@
       onDecode(value)  {
         window.navigator.vibrate(200)
         this.$emit("code", value)
+      },
+    async onInit (promise) {
+      this.loading = true
+
+      try {
+        await promise
+      } catch (error) {
+        console.error(error)
+      } finally {
+        this.loading = false
       }
+    },
     },
     
   }
