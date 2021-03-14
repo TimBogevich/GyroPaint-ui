@@ -14,7 +14,7 @@
     </qrcode-stream>
 
     <v-row class="pa-5 justify-center">
-      <v-form>
+      <v-form  @submit.prevent="$emit('code', roomId)">
         <v-text-field
           outline
           label="or enter the number manually"

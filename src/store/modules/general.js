@@ -21,9 +21,11 @@ function reactColyseus(room, state, obj) {
 }
 
 const state = {
+  room : null,
   users : [],
   colors : ["black", "red", "yellow", "green", "blue", "purple", "pink", "brown"],
-  strokes : [5, 10, 15, 20, 30]
+  strokes : [5, 10, 15, 20, 30],
+  image : null,
 }
 
 const mutations = {
@@ -43,10 +45,14 @@ const getters = {
 }
 
 const actions = {
-  init({state, getters}, options) {
+  init({state, getters, commit}, options) {
     let client = new Colyseus.Client(urljoin(getters.protocolWS, getters.server));
     client.joinOrCreate(options.roomId, options).then(room => {
+      commit("SET_ROOM", room)
       reactColyseus(room, state.users, "users")
+      room.state.listen("image", (currentValue) => {
+        commit("SET_IMAGE", currentValue)
+    });
     })
   },
   async createRoom({getters}) {

@@ -14,6 +14,7 @@
     "paintablejs": "^1.0.4",
     "paper": "^0.12.8",
     "qrcode": "^1.4.4",
+    "undo-canvas": "^0.1.3",
     "url-join": "^4.0.1",
     "uuid": "^8.3.2",
     "vue": "^2.6.11",
