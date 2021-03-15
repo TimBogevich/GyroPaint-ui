@@ -23,7 +23,7 @@ function reactColyseus(room, state, obj) {
 const state = {
   room : null,
   users : [],
-  colors : ["black", "red", "yellow", "green", "blue", "purple", "pink", "brown"],
+  colors : ["#000000", "#d05950", "#fff281", "#8dcc8f", "#71bcf7", "#c075cd", "#f16f9b", "#a9928a"],
   strokes : [5, 10, 15, 20, 30],
   image : null,
 }
