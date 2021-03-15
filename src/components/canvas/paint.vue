@@ -11,7 +11,7 @@
     </div>
 
     <img class="coloringImage" :src="image">
-    <v-btn @click="undo" id="undo" color="success">undo</v-btn>
+    <v-btn @click="restore" id="undo" color="success">undo</v-btn>
   </div>
 </template>
 
@@ -87,7 +87,8 @@
                             height: ${user.strokeSize}px;`,
         undo() {this.ctx.undo()},
         redo() {this.ctx.redo()},
-        restore() {this.ctx.undo()},
+        restore() {
+          this.ctx.clearRect(0,0, window.innerWidth, window.innerHeight)},
       },
       mounted() {
         let canvas = this.$refs.canv
