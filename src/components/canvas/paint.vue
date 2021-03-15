@@ -11,7 +11,6 @@
     </div>
 
     <img class="coloringImage" :src="image">
-    <v-btn @click="restore" id="undo" color="success">undo</v-btn>
   </div>
 </template>
 
