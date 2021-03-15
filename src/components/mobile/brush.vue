@@ -145,10 +145,15 @@
         this.room.send("addImage", src)
       }
     },
-    created() {
+    async created() {
       let client = new Colyseus.Client(urljoin(this.protocolWS, this.server))
-      client.joinOrCreate(this.roomId).then(room => this.room = room)
+      await client.joinOrCreate(this.roomId).then(room => this.room = room)
 
+      this.room.state.listen("boardSessionId", (change) => {
+        if (!change) {
+          this.$emit("logout")
+        }
+      })
       
       let sensor = new RelativeOrientationSensor({ frequency: 60 });
       sensor.onreading = () => this.handleSensor(sensor)

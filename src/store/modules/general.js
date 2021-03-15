@@ -52,7 +52,7 @@ const actions = {
       reactColyseus(room, state.users, "users")
       room.state.listen("image", (currentValue) => {
         commit("SET_IMAGE", currentValue)
-    });
+      });
     })
   },
   async createRoom({getters}) {

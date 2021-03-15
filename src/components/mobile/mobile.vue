@@ -2,7 +2,7 @@
   <div>
     <welcome @toScan="mode='qr'" v-if="mode == 'welcome'" />
     <scanQr @code="goDraw($event)" v-else-if="mode == 'qr'" />
-    <brush v-else-if="mode == 'brush'"  :roomId="roomId"/>
+    <brush v-else-if="mode == 'brush'"  @logout="mode='qr'" :roomId="roomId"/>
     <v-progress-circular
       v-else-if="mode == 'load'"
       :size="70"
